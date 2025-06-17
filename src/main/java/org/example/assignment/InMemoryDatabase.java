@@ -5,22 +5,56 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Configuration
 public class InMemoryDatabase {
+
+    private final List<Student> data;
+
+    public InMemoryDatabase() {
+        Student student1 = new Student();
+        student1.setId(1);
+        student1.setUuid(UUID.randomUUID().toString());
+        student1.setFullName("Jork");
+        student1.setScore(99.99);
+
+        Student student2 = new Student();
+        student2.setId(2);
+        student2.setUuid(UUID.randomUUID().toString());
+        student2.setFullName("moni");
+        student2.setScore(89.99);
+
+        this.data = new ArrayList<>();
+        this.data.addAll(List.of(student1, student2));
+    }
+
     @Bean
-    public List<Student> studentList() {
-        List<Student> students = new ArrayList<>();
-        students.add(new Student(1, "Kak", "Male", 85.0));
-        students.add(new Student(2, "Jork", "Male", 78.5));
-        students.add(new Student(3, "Jing", "Female", 92.0));
-        students.add(new Student(4, "Kak Spring", "Male", 88.0));
-        students.add(new Student(5, "Kak React", "Female", 95.5));
-        students.add(new Student(6, "Moni", "Male", 67.0));
-        students.add(new Student(7, "Matra", "Male", 80.0));
-        students.add(new Student(8, "Red Red", "Female", 73.5));
-        students.add(new Student(9, "Ketty", "Female", 90.0));
-        students.add(new Student(10, "Jack", "Male", 82.0));
-        return students;
+    List<Student> students() {
+        return data;
+    }
+
+    public void insert(Student student) {
+        this.data.add(student);
+    }
+
+    @Bean("s1")
+    public Student student1() {
+        Student student = new Student();
+        student.setId(1);
+        student.setUuid(UUID.randomUUID().toString());
+        student.setFullName("Jork");
+        student.setScore(99.99);
+        return student;
+    }
+
+    @Bean("s2")
+    public Student student2() {
+        Student student = new Student();
+        student.setId(2);
+        student.setUuid(UUID.randomUUID().toString());
+        student.setFullName("Moni");
+        student.setScore(89.99);
+        return student;
     }
 }
